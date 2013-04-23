@@ -3,9 +3,5 @@ module MoviesHelper
   def oddness(count)
     count.odd? ?  "odd" :  "even"
   end
-  
-  def getID(movie)
-    h1 = Movie.find_by_title(movie)
-    h1[:id]
-  end
+ 
 end
