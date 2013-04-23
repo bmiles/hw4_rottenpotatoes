@@ -10,12 +10,20 @@ module NavigationHelpers
   #
   # step definition in web_steps.rb
   #
+  
   def path_to(page_name)
     case page_name
 
-    when /^the home\s?page$/
-      '/'
-
+    when /^the (RottenPotatoes )?home\s?page$/ then '/movies'
+    when /^the movies page$/ then '/movies'
+    when /^the edit page for "(.*)"$/
+      movie = Movie.find_by_title($1)
+      edit_movie_path(movie)
+    when /^the details page for "(.*)"$/
+      movie = Movie.find_by_title($1)
+      movie_path(movie) 
+      
+       
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #
