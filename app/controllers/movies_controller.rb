@@ -5,7 +5,12 @@ class MoviesController < ApplicationController
     @movie = Movie.find(id) # look up movie by unique ID
     # will render app/views/movies/show.<extension> by default
   end
-
+  
+  def find_similar
+    @movies = Movie.similar_dir(2)
+    render :template => 'movies/find_similar.html.haml'
+  end
+  
   def index
     sort = params[:sort] || session[:sort]
     case sort
