@@ -8,7 +8,7 @@ class MoviesController < ApplicationController
   
   def find_similar
     @movies = Movie.similar_dir(2)
-    render :template => 'movies/find_similar.html.haml'
+    render :action => 'movies/find_similar.html.haml'
   end
   
   def index
