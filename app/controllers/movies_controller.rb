@@ -6,9 +6,9 @@ class MoviesController < ApplicationController
     # will render app/views/movies/show.<extension> by default
   end
   
-  def find_similar
+  def similar
     @movies = Movie.similar_dir(2)
-    render :template => 'movies/find_similar.html.haml'
+    render :template => 'movies/similar.html.haml'
   end
   
   def index
