@@ -10,8 +10,8 @@ class MoviesController < ApplicationController
     @source_movie = Movie.find_by_id(params[:id])
     source_director = @source_movie.director
     
-    if source_director.nil?
-      flash[:notice] = "#{@source_movie.title} does not have a director"
+    if source_director.nil? || source_director == ""
+      flash[:notice] = "'#{@source_movie.title}' has no director info"
       redirect_to "/movies"  
     else
       @movies = Movie.find_all_by_director(source_director)
