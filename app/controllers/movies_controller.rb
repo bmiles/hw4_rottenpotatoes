@@ -7,8 +7,16 @@ class MoviesController < ApplicationController
   end
   
   def similar
-    @movies = Movie.similar_dir(2)
-    render :template => 'movies/similar.html.haml'
+    @source_movie = Movie.find_by_id(params[:id])
+    source_director = @source_movie.director
+    
+    if source_director.nil?
+      flash[:notice] = "#{@source_movie.title} does not have a director"
+      redirect_to "/movies"  
+    else
+      @movies = Movie.find_all_by_director(source_director)
+      render :template => 'movies/similar.html.haml'
+    end
   end
   
   def index

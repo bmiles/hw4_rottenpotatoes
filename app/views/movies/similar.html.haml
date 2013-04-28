@@ -1,0 +1,6 @@
+%tbody
+  - @movies.each do |movie|
+    %tr
+      %td= movie.director 
+
+%p= "#{@movies}"

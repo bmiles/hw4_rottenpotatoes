@@ -21,7 +21,10 @@ module NavigationHelpers
       edit_movie_path(movie)
     when /^the details page for "(.*)"$/
       movie = Movie.find_by_title($1)
-      movie_path(movie) 
+      movie_path(movie)
+    when /^the Similar Movies page for "(.*)"$/
+      movie = Movie.find_by_title($1)
+      "/movies/#{movie.id}/similar"
       
        
     # Add more mappings here.
