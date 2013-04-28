@@ -1,7 +1,17 @@
 require 'spec_helper'
-require 'pp'
+require 'debugger'
 
 describe MoviesController do
+  describe "show movies" do
+    it 'should call the show action when following a more details link' do
+      #Movie = mock("Movie", :id => 6)
+      Movie.stub(:find).with("6") {["Array"]}
+      #debugger
+      
+      get 'show', {:id => 6}
+      response.should be_success
+      end
+    end
   describe "find movies with the same director" do
    it 'similar page should have a RESTful route' do
      { :get => "/movies/1/similar"}.
@@ -19,10 +29,6 @@ describe MoviesController do
    pending
    end
    
-#    it 'should include rating and year' do
-#     movie = FactoryGirl.build(:movie, :title => 'Milk')
-#     # etc.
-#    end
    it 'should render the similar directors template' do
      @source_movie.stub(:director).and_return("Chris Nolan")
      get 'similar', {:id => 2}
@@ -31,21 +37,14 @@ describe MoviesController do
    it "should redirect the user to the homepage if the director is nil" do
      @source_movie.stub(:director).and_return(nil)
      @source_movie.stub(:title).and_return("movie title")
-     #pp james
-     #source_director = mock(source_director)
-     #source_director.stub!(:director) {nil}
      get 'similar', {:id => 2}   
        response.should be_redirect
    end
    
-   it 'should return a @movie variable that contains all movies by the director of the movie with the id that was passed to the similar action.' do
-     Movie.stub(:similar_dir) { 1 }
-     get :similar , {:id => 1}
-     #Movie.should_receive(:similar_dir).with(2)
-     assigns.(@movies).should == 1
-     #Movie.similiar_dir(2).
-     #expect(response).to eq(@fake_results)
+   it 'should return a @movies variable that contains all movies by the director of the movie with the id that was passed to the similar action.' do
+     @source_movie.stub(:director).and_return("Chris Nolan")
+     get 'similar', {:id => 99}
+     assigns(:similar).should == @movies
    end
-   it 'should direct the user to the home page and only dispaying movies with the director from the previous show page.'
  end
 end
