@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'pp'
 
 describe MoviesController do
   describe "find movies with the same director" do
@@ -8,29 +9,32 @@ describe MoviesController do
    end
       
    it 'it should call similar' do
-     #Movie.should_receive(:find_all_by_director).with(@source_director).
-     #response.should be_
-     source_movie = mock("movie")
-     source_movie.stub(:director) { "Nolan" }
-     get :similar, {:id => 2}
-     assigns(:similar).should == @movies
-     #get :similar, {:id => 2}
+     @source_movie.stub!(:director).and_return("Nolan")
+     get 'similar', {:id => 1}
+     response.should be_success
    end
+     
    
    it 'should pass the id of current movie to the :source_movie key in params when the user clicks the link' do
    pending
    end
    
+#    it 'should include rating and year' do
+#     movie = FactoryGirl.build(:movie, :title => 'Milk')
+#     # etc.
+#    end
    it 'should render the similar directors template' do
-     Movie = mock("movie")
-     Movie.stub(:similar_dir) {@fake_results}
-     get :similar, {:id => 2}
+     @source_movie.stub(:director).and_return("Chris Nolan")
+     get 'similar', {:id => 2}
      response.should render_template('similar')
    end
-   it "should redirect the user to the homepage is the director is nil" do
-     source_director = mock(source_director)
-     source_director.stub(:director) {nil}
-     { :get => "/movies/1/similar" }     
+   it "should redirect the user to the homepage if the director is nil" do
+     @source_movie.stub(:director).and_return(nil)
+     @source_movie.stub(:title).and_return("movie title")
+     #pp james
+     #source_director = mock(source_director)
+     #source_director.stub!(:director) {nil}
+     get 'similar', {:id => 2}   
        response.should be_redirect
    end
    
